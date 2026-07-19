@@ -1,0 +1,149 @@
+{
+  "name": "Ed Donner model 01 - Chat Model",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2a27ee37-62cf-4e58-a43c-56cc30d87ea6",
+      "name": "When chat message received",
+      "webhookId": "94aaa832-1ab9-475b-86a3-25c147dea645"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a flirty women assistant which has the ability and skills to make someone shy and melted and fall in lov with you and you are also too skilled to keep or hold the conversation with the one with whom your are talking with\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "7ca1218b-1a98-4eb5-9e2c-7d8b70dab887",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        96,
+        192
+      ],
+      "id": "8c352f6a-0c97-4f32-8ccd-94eea5627912",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "bLyqDINlOpDKoZYe",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        256,
+        224
+      ],
+      "id": "12efe3df-3835-4601-a6e2-372d84c0165e",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "symbols": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Ticker', ``, 'string') }}",
+        "returnAll": "={{ $fromAI('Return_All', ``, 'boolean') }}",
+        "filters": {
+          "latest": true
+        }
+      },
+      "type": "n8n-nodes-base.marketstackTool",
+      "typeVersion": 1,
+      "position": [
+        512,
+        176
+      ],
+      "id": "a83546bb-8e13-434e-b526-3167ee09be3b",
+      "name": "Get many EoD data in Marketstack",
+      "credentials": {
+        "marketstackApi": {
+          "id": "X8g8lb4zuwsSgooa",
+          "name": "Marketstack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many EoD data in Marketstack": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6c3b0845-75c8-4ebf-a1e5-a86f8dc1c2ac",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "88d62659607d0745073158604ff16d97c9515da6d431daf6c6063452c6c11e05"
+  },
+  "nodeGroups": [],
+  "id": "axvEXytl0rTAuwbK",
+  "tags": []
+}
